@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pothole Detection System</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f0f8ff; /* Alice blue background for freshness */
+      color: #333; /* Neutral dark gray for text */
+    }
+    header {
+      background: #005f99; /* Deep blue for the header */
+      color: white;
+      padding: 20px 10px;
+      text-align: center;
+      position: relative;
+    }
+    header img {
+      position: absolute;
+      top: 50%;
+      left: 10px;
+      transform: translateY(-50%);
+      height: 60px; /* Adjust logo height */
+    }
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+    header p {
+      margin: 5px 0 0;
+      font-size: 14px;
+    }
+    .container {
+      margin: 30px auto;
+      max-width: 800px;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .container h2 {
+      text-align: center;
+      color: #005f99; /* Matches the header color */
+      margin-bottom: 20px;
+    }
+    .about p, .about ul {
+      margin: 15px 0;
+      line-height: 1.6;
+    }
+    .about ul li {
+      margin: 10px 0;
+    }
+    .test-model {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .test-model input[type="file"] {
+      margin: 10px auto;
+      display: block;
+      font-size: 16px;
+    }
+    .test-model button {
+      background: #007acc; /* Bright blue button */
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s ease;
+    }
+    .test-model button:hover {
+      background: #005f99; /* Darker blue on hover */
+    }
+    #result {
+      font-weight: bold;
+      margin-top: 20px;
+      font-size: 18px;
+      color: #4caf50; /* Default to green */
+    }
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 10px;
+      background: #005f99;
+      color: white;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <!-- Use Flask's url_for to reference the image from the static folder -->
+    <img src="{{ url_for('static', filename='logo.jpg') }}" alt="pothole detection">
+    <h1>Welcome To Pothole Detection System</h1>
+    <p>Your go-to solution for identifying potholes using machine learning</p>
+  </header>
+
+  <div class="container">
+    <section class="about">
+      <h2>About the Project</h2>
+      <p>This project utilizes Convolutional Neural Networks (CNNs) to detect potholes in road images. It is trained on a dataset of normal and pothole images to help in road maintenance and safety.</p>
+      <ul>
+        <li><strong>Technology Stack:</strong> Python, Machine Learning</li>
+        <li><strong>Preprocessing:</strong> Image normalization, resizing, and grayscale conversion</li>
+        <li><strong>Goal:</strong> Assist authorities in identifying road hazards efficiently</li>
+      </ul>
+    </section>
+
+    <section class="test-model">
+      <h2>Test the Model</h2>
+      <form action="/predict" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept="image/*" required>
+        <button type="submit">Upload and Detect</button>
+      </form>
+      {% if prediction %}
+      <p id="result" style="color: {% if prediction == 'Normal Road.' %} #4caf50 {% else %} #ff0000 {% endif %};">{{ prediction }}</p>
+      {% endif %}
+    </section>
+  </div>
+
+  <div class="footer">
+    2024 Pothole Detection System
+  </div>
+</body>
+</html>
